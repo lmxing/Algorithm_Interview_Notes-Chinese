@@ -28,14 +28,17 @@ Index
 
 ## RNN 的基本结构
 - RNN 本质上是一个**递推函数**
-    <div align="center"><a href="http://www.codecogs.com/eqnedit.php?latex=\dpi{120}&space;\fn_cs&space;h^{(t)}=f({\color{Red}h^{(t-1)}};\theta)"><img src="../_assets/公式_20180829145525.png" height="" /></a></div>
-
+    
+<div align="center"><a href="http://www.codecogs.com/eqnedit.php?latex=\dpi{120}&space;\fn_cs&space;h^{(t)}=f({\color{Red}h^{(t-1)}};\theta)"><img src="../_assets/公式_20180829145525.png" height="" /></a></div>
+    
 - 考虑当前输入 `x(t)`
-    <div align="center"><a href="http://www.codecogs.com/eqnedit.php?latex=\dpi{120}&space;\fn_cs&space;h^{(t)}=f({\color{Red}h^{(t-1)},x^{(t)}};\theta)"><img src="../_assets/公式_20180829145336.png" height="" /></a></div>
-
+    
+<div align="center"><a href="http://www.codecogs.com/eqnedit.php?latex=\dpi{120}&space;\fn_cs&space;h^{(t)}=f({\color{Red}h^{(t-1)},x^{(t)}};\theta)"><img src="../_assets/公式_20180829145336.png" height="" /></a></div>
+    
 - 以上计算公式可展开为如下**计算图**（无输出单元）
-    <div align="center"><img src="../_assets/TIM截图20180829145622.png" height="" /></div>
-
+    
+<div align="center"><img src="../_assets/TIM截图20180829145622.png" height="" /></div>
+    
 - RNN 的**前向传播**公式
     <div align="center"><a href="http://www.codecogs.com/eqnedit.php?latex=\dpi{120}&space;\fn_cs&space;\begin{aligned}&space;a^{(t)}&=W\cdot[h^{(t-1)};x^{(t)}]&plus;b\\&space;h^{(t)}&=f(a^{(t)})&space;\end{aligned}"><img src="../_assets/公式_20180829150659.png" height="" /></a></div>
 
@@ -87,12 +90,13 @@ Index
 
     - 一个长度为 `T` 的 RNN 展开后，可以看做是一个 **T 层的前馈网络**；同时每一层都可以有**新的输入**
     - 通过对当前输入 `x_t` 和上一层的隐状态 `h_{t-1}` 进行编码，**第 `t` 层的隐状态** `h_t` 记录了序列中前 `t` 个输入的信息。
+        
         > 普通的前馈网络就像火车的**一节车厢**，只有一个入口，一个出口；而 RNN 相当于**一列火车**，有多节车厢接收**当前时间步**的输入信息并输出**编码后的状态信息**（包括**当前的状态和之前的所有状态**）。
     - **最后一层隐状态 `x_T`** 编码了整个序列的信息，因此可以看作**整个序列的压缩表示**。
-    - 常见的文本分类任务中，将 `h_T` 通过一个 Softmax 层，即可获得作为每个类别的概率：
-
-        <div align="center"><a href="http://www.codecogs.com/eqnedit.php?latex=\fn_cs&space;\large&space;\begin{aligned}&space;a_t&=Ux_t&plus;Wh_{t-1}\\&space;h_t&=f(a_t)\\&space;y&=g(Vh_t)&space;\end{aligned}"><img src="../_assets/公式_20180828112616.png" height="" /></a></div>
-
+- 常见的文本分类任务中，将 `h_T` 通过一个 Softmax 层，即可获得作为每个类别的概率：
+    
+    <div align="center"><a href="http://www.codecogs.com/eqnedit.php?latex=\fn_cs&space;\large&space;\begin{aligned}&space;a_t&=Ux_t&plus;Wh_{t-1}\\&space;h_t&=f(a_t)\\&space;y&=g(Vh_t)&space;\end{aligned}"><img src="../_assets/公式_20180828112616.png" height="" /></a></div>
+    
     其中 
     - `U` 为输入层到隐藏层的权重矩阵
     - `W` 为隐藏层从上一时刻到下一时刻的状态转移权重矩阵
@@ -104,17 +108,19 @@ Index
 - 最大步长为 `T` 的 RNN 展开后相当于一个**共享参数**的 T 层前馈网络
 
     - RNN 的前向传播过程
-        <div align="center"><a href="http://www.codecogs.com/eqnedit.php?latex=\fn_cs&space;\large&space;\begin{aligned}&space;a_t&=Ux_t&plus;Wh_{t-1}\\&space;h_t&=f(a_t)&space;\end{aligned}"><img src="../_assets/公式_20180828174727.png" height="" /></a></div>
-    
+        
+    <div align="center"><a href="http://www.codecogs.com/eqnedit.php?latex=\fn_cs&space;\large&space;\begin{aligned}&space;a_t&=Ux_t&plus;Wh_{t-1}\\&space;h_t&=f(a_t)&space;\end{aligned}"><img src="../_assets/公式_20180828174727.png" height="" /></a></div>
+        
     - 展开前一层
-        <div align="center"><a href="http://www.codecogs.com/eqnedit.php?latex=\fn_cs&space;\large&space;\begin{aligned}&space;a_t&=Ux_t&plus;Wh_{t-1}&space;\\&=Ux_t&plus;W\cdot&space;f(Ux_{t-1}&plus;Wh_{t-2})&space;\end{aligned}"><img src="../_assets/公式_20180828175013.png" height="" /></a></div>
-
-    - RNN 的梯度计算公式
+    
+    <div align="center"><a href="http://www.codecogs.com/eqnedit.php?latex=\fn_cs&space;\large&space;\begin{aligned}&space;a_t&=Ux_t&plus;Wh_{t-1}&space;\\&=Ux_t&plus;W\cdot&space;f(Ux_{t-1}&plus;Wh_{t-2})&space;\end{aligned}"><img src="../_assets/公式_20180828175013.png" height="" /></a></div>
+        
+- RNN 的梯度计算公式
         <div align="center"><a href="http://www.codecogs.com/eqnedit.php?latex=\fn_jvn&space;\large&space;\frac{\partial&space;a^{(t)}}{\partial&space;a^{(1)}}=\frac{\partial&space;a^{(t)}}{\partial&space;a^{(t-1)}}\cdot\frac{\partial&space;a^{(t-1)}}{\partial&space;a^{(t-2)}}\cdots\frac{\partial&space;a^{(2)}}{\partial&space;a^{(1)}}"><img src="../_assets/公式_20180925142404.png" height="" /></a></div>
-
-      其中
+    
+  其中
         <div align="center"><a href="http://www.codecogs.com/eqnedit.php?latex=\dpi{120}&space;\fn_jvn&space;\begin{aligned}&space;\frac{\partial&space;a^{(t)}}{\partial&space;a^{(t-1)}}&=\frac{\partial&space;a^{(t)}}{\partial&space;h^{(t-1)}}\cdot\frac{\partial&space;h^{(t-1)}}{\partial&space;a^{(t-1)}}\\&space;&=W\cdot&space;\mathrm{diag}[f'(a^{(t-1)})]\\&space;&=\begin{pmatrix}&space;w_{11}\cdot&space;f'(a_1^{(t-1)})&space;&\cdots&space;&w_{1n}\cdot&space;f'(a_n^{(t-1)})&space;\\&space;\vdots&space;&&space;\ddots&space;&\vdots&space;\\&space;w_{n1}\cdot&space;f'(a_1^{(t-1)})&space;&\cdots&space;&w_{nn}\cdot&space;f'(a_n^{(t-1)})&space;\end{pmatrix}&space;\end{aligned}"><img src="../_assets/公式_20180925143950.png" height="" /></a></div>
-
+    
       > 上标 `(t)` 表示时间步，下标 `n` 表示隐藏层的单元数（维度）；`diag()` 为对角矩阵
 
 #### RNN 中能否使用 `ReLU` 作为激活函数？
@@ -131,11 +137,13 @@ Index
     - 因此，在 RNN 中使用 ReLU 应该注意使用**单位矩阵**来初始化权重矩阵。
 
         > 为什么普通的前馈网络或 CNN 中不会出现这中现象？
-        >> 因为他们每一层的 `W` 不同，且在初始化时是独立同分布的，因此可以在一定程度相互抵消。即使多层之后一般也不会出现数值问题。
-
+        >
+    > > 因为他们每一层的 `W` 不同，且在初始化时是独立同分布的，因此可以在一定程度相互抵消。即使多层之后一般也不会出现数值问题。
+    
 - **使用 `ReLU` 也不能完全避免 RNN 中的梯度消失/爆炸问题**，问题依然在于存在 `t` 个 `W` 的连乘项。
 
   - 注意**最后一步**，假设所有神经元都处于**激活状态**，当 `ReLU` 作为 `f` 时，有
+    
     <div align="center"><a href="http://www.codecogs.com/eqnedit.php?latex=\fn_jvn&space;\large&space;\begin{aligned}&space;&&\frac{\partial&space;a^{(t)}}{\partial&space;a^{(t-1)}}&=W\\&space;&\Rightarrow&space;&\frac{\partial&space;a^{(t)}}{\partial&space;a^{(0)}}&=W^t&space;\end{aligned}"><img src="../_assets/公式_20180828200604.png" height="" /></a></div>
     
   - 可见**只要 `W` 不是单位矩阵**，还是可能会出现梯度消失/爆炸。
@@ -144,6 +152,7 @@ Index
 - 综上所述，RNN 因为每一个时间步都**共享参数**的缘故，容易出现**数值溢出问题**
 - 因此，推荐的做法是将 `W` 初始化为**单位矩阵**。
 - 有实践证明，使用单位矩阵初始化 `W` 并使用 `ReLU` 作为激活函数在一些应用中，与 LSTM 有相似的结果
+    
     > [RNN中为什么要采用tanh而不是ReLu作为激活函数？ - chaopig 的回答](https://www.zhihu.com/question/61265076/answer/260492479) - 知乎 
 
 #### 梯度爆炸的解决方法
@@ -181,7 +190,11 @@ Index
 
 > 其中运算符 `o`（`\circ`） 表示向量中的元素**按位相乘**；有的地方也使用符号 `⊙`（`\odot`）表示
 
+<div align="center"><img src="../_assets/LSTM3-chain.png" height="200" /></div>
+<div align="center"><img src="../_assets/LSTM3-SimpleRNN.png" height="200" /></div>
+
 ### LSTM 是如何实现长短期记忆的？（遗忘门和输入门的作用）
+
 - LSTM 主要通过**遗忘门**和**输入门**来实现长短期记忆。
     - 如果当前时间点的状态中没有重要信息，遗忘门 `f` 中各分量的值将接近 1（`f -> 1`）；输入门 `i` 中各分量的值将接近 0（`i -> 0`）；此时过去的记忆将会被保存，从而实现**长期记忆**；
     - 如果当前时间点的状态中出现了重要信息，且之前的记忆不再重要，则 `f -> 0`，`i -> 1`；此时过去的记忆被遗忘，新的重要信息被保存，从而实现**短期记忆**；
@@ -193,6 +206,7 @@ Index
 - 在计算**候选记忆**或**隐藏状态**时，使用双曲正切函数 tanh 作为激活函数
 
 **sigmoid 的“饱和”性**
+
 - 所谓饱和性，即输入超过一定范围后，输出几乎不再发生明显变化了
 - sigmoid 的值域为 `(0, 1)`，符合**门控**的定义：
     - 当输入较大或较小时，其输出会接近 1 或 0，从而保证门的开或关；
@@ -200,22 +214,27 @@ Index
 - sigmoid 是现代**门控单元**中的共同选择。
 
 **为什么使用 tanh？**
+
 - 使用 tanh 作为计算状态时的激活函数，主要是因为其**值域**为 `(-1, 1)`：
     - 一方面，这与多数场景下特征分布以 0 为中心相吻合；
     - 另一方面，可以避免在前向传播的时候发生**数值问题**（主要是上溢）
 - 此外，tanh 比 sigmoid 在 0 附近有更大的梯度，通常会使模型收敛更快。
+    
     > 早期，使用 `h(x) = 2*sigmoid(x) - 1` 作为激活函数，该激活函数的值域也是 `(-1, 1)`
 
 **Hard gate**
+
 - 在一些对计算能力有限制的设备中，可能会使用 hard gate
 - 因为 sigmoid 求指数时需要一定的计算量，此时会使用 0/1 门（hard gate）让门控输出 0 或 1 的离散值。
 
 ### 窥孔机制
 > Gers F A, Schmidhuber J. Recurrent nets that time and count[C]. 2000.
 - LSTM 通常使用输入 `x_t` 和上一步的隐状态 `h_{t-1}` 参与门控计算；
-    <div align="center"><a href="http://www.codecogs.com/eqnedit.php?latex=\fn_cs&space;\large&space;g=\sigmoid(W\cdot[x_t;h_{t-1}]&plus;b)"><img src="../_assets/公式_20180829114415.png" height="" /></a></div>
-
+    
+<div align="center"><a href="http://www.codecogs.com/eqnedit.php?latex=\fn_cs&space;\large&space;g=\sigmoid(W\cdot[x_t;h_{t-1}]&plus;b)"><img src="../_assets/公式_20180829114415.png" height="" /></a></div>
+    
 - **窥孔机制**指让记忆状态也参与门控的计算中
+    
     <div align="center"><a href="http://www.codecogs.com/eqnedit.php?latex=\fn_cs&space;\large&space;g=\sigmoid(W\cdot[x_t;h_{t-1};c_{t-1}]&plus;b)"><img src="../_assets/公式_20180829114459.png" height="" /></a></div>
 
 ### GRU 与 LSTM 的关系

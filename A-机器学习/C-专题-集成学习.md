@@ -53,11 +53,13 @@ Index
   - 基于每个采样集训练一个基学习器，并得到 `T` 个基学习器；
   - 预测时，集体**投票决策****。
     > **自助采样法**：对 m 个样本的训练集，有放回的采样 m 次；此时，样本在 m 次采样中始终没被采样的概率约为 `0.368`，即每次自助采样只能采样到全部样本的 `63%` 左右。
-      <div align="center"><a href="http://www.codecogs.com/eqnedit.php?latex=\fn_jvn&space;\lim_{m\to\infty}\left&space;(&space;1-\frac{1}{m}&space;\right&space;)^m\rightarrow&space;\frac{1}{e}\approx&space;0.368"><img src="../_assets/公式_20180902220459.png" height="" /></a></div>
-
+      
+    <div align="center"><a href="http://www.codecogs.com/eqnedit.php?latex=\fn_jvn&space;\lim_{m\to\infty}\left&space;(&space;1-\frac{1}{m}&space;\right&space;)^m\rightarrow&space;\frac{1}{e}\approx&space;0.368"><img src="../_assets/公式_20180902220459.png" height="" /></a></div>
+  
 - **特点**：
   - 训练每个基学习器时只使用一部分样本；
   - 偏好**不稳定**的学习器作为基学习器；
+    
     > 所谓不稳定的学习器，指的是对**样本分布**较为敏感的学习器。
 
 #### Stacking 方法
@@ -122,6 +124,7 @@ Index
   - 对 `n` 个**独立不相关的模型**预测结果取平均，方差是原来的 `1/n`；
   - 假设所有基分类器出错的概率是独立的，**超过半数**基分类器出错的概率会随着基分类器的数量增加而下降。
 - 泛化误差、偏差、方差、过拟合、欠拟合、模型复杂度（模型容量）的关系图：
+  
   <div align="center"><img src="../_assets/TIM截图20180817214034.png" height="" /></div>
 
 ## AdaBoost 算法
